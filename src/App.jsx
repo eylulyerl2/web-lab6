@@ -1,10 +1,12 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { fetchPosts } from './api/postsApi.js';
 import { postsReducer, initialState } from './reducer/postsReducer.js';
+import FilterForm from './components/FilterForm.jsx';
 import PostList from './components/PostList.jsx';
 
 function App() {
   const [state, dispatch] = useReducer(postsReducer, initialState);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -26,16 +28,26 @@ function App() {
   }, []);
 
   const { posts, loading, error } = state;
+
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(filter.trim().toLowerCase())
+  );
+
   const isReady = !loading && !error;
 
   return (
     <div className="app">
       <h1>Post Dashboard</h1>
+      <FilterForm value={filter} onChange={setFilter} />
 
       {loading && <p>Loading posts...</p>}
       {error && <p role="alert">Error: {error}</p>}
+
       {isReady && posts.length === 0 && <p>No posts found.</p>}
-      {isReady && posts.length > 0 && <PostList posts={posts} />}
+      {isReady && posts.length > 0 && filteredPosts.length === 0 && (
+        <p>No posts match "{filter}".</p>
+      )}
+      {isReady && filteredPosts.length > 0 && <PostList posts={filteredPosts} />}
     </div>
   );
 }
