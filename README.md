@@ -6,17 +6,22 @@ A React app built with Vite that fetches posts from JSONPlaceholder, shows loadi
 ## File Organization
 
 ```
-src/
-├── api/
-│   └── postsApi.js       # fetchPosts(): data fetching only, no React or JSX
-├── components/
-│   ├── Post.jsx          # Shows a single post (title + body), no state
-│   ├── PostList.jsx      # Maps posts to <Post /> using post.id as key
-│   └── FilterForm.jsx    # Controlled input for filtering by title
-├── reducer/
-│   └── postsReducer.js   # Pure reducer: FETCH_START / FETCH_SUCCESS / FETCH_ERROR
-├── App.jsx               # Owns state, fetches on mount, derives filtered posts
-└── main.jsx              # Entry point
+/assignment6
+├── public/
+├── src/
+│   ├── api/
+│   │   └── postsApi.js       # fetchPosts(): data fetching only, no React or JSX
+│   ├── components/
+│   │   ├── Post.jsx          # Shows a single post (title + body), no state
+│   │   ├── PostList.jsx      # Maps posts to <Post /> using post.id as key
+│   │   └── FilterForm.jsx    # Controlled input for filtering by title
+│   ├── reducer/
+│   │   └── postsReducer.js   # Pure reducer: FETCH_START / FETCH_SUCCESS / FETCH_ERROR
+│   ├── App.jsx               # Owns state, fetches on mount, derives filtered posts
+│   └── main.jsx              # Entry point
+├── index.html
+├── package.json
+└── vite.config.js
 ```
 
 - **API layer** only gets data. It doesn't know anything about React.
